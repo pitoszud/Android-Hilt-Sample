@@ -5,10 +5,12 @@ import com.example.hiltstudy.services.LocalVenueService
 import com.example.hiltstudy.services.RemoteVenueService
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Qualifier
+import javax.inject.Singleton
 
 
 // More efficient than @Provides
@@ -29,6 +31,14 @@ abstract class AppModule{
     abstract fun bindRemoteVenueService(
         remoteVenueService: RemoteVenueService
     ): VenueService
+
+
+    @Singleton
+    @Provides
+    fun provideParam(): String {
+        return "sample string"
+    }
+
 }
 
 
