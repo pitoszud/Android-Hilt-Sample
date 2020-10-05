@@ -1,13 +1,21 @@
 package com.example.hiltstudy.data
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.hiltstudy.Result
+import com.example.hiltstudy.services.BookingService
 
-class BookingRemoteDataSource : BookingDataSource{
+class BookingRemoteDataSource(val bookingService: BookingService) : BookingDataSource{
 
-    override suspend fun getBookings(userId: String, accountType: String): Result<List<Booking>> {
+    override suspend fun getBookings(userId: String, accountType: String) {
         val booking = Booking("1234", "Saturday morning swim")
         val bookings = listOf(booking)
-        return Result.Success(bookings)
     }
+
+    override fun observeBookings(): LiveData<List<Booking>>{
+        val ld = MutableLiveData<List<Booking>>(emptyList())
+        return ld
+    }
+
 
 }

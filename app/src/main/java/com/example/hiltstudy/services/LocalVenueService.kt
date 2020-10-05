@@ -3,9 +3,11 @@ package com.example.hiltstudy.services
 import com.example.hiltstudy.data.Venue
 import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.random.Random
 
-@ActivityScoped
+// @ActivityScoped
+@Singleton
 class LocalVenueService @Inject constructor(): VenueService{
 
     override fun getVenue(): Venue {
@@ -14,7 +16,8 @@ class LocalVenueService @Inject constructor(): VenueService{
 }
 
 
-@ActivityScoped
+// @ActivityScoped
+@Singleton
 class RemoteVenueService @Inject constructor(): VenueService{
 
     override fun getVenue(): Venue {

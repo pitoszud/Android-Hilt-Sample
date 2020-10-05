@@ -1,54 +1,88 @@
 package com.example.hiltstudy.di
 
-import com.example.hiltstudy.services.VenueService
-import com.example.hiltstudy.services.LocalVenueService
-import com.example.hiltstudy.services.RemoteVenueService
+import android.content.Context
+import com.example.hiltstudy.data.BookingDataSource
+import com.example.hiltstudy.data.BookingLocalDataSouce
+import com.example.hiltstudy.data.BookingRemoteDataSource
+import com.example.hiltstudy.database.AppDatabase
+import com.example.hiltstudy.repository.BookingRepository
+import com.example.hiltstudy.repository.DefaultBookingRepository
+import com.example.hiltstudy.services.BookingService
+import com.example.hiltstudy.services.BookingServiceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
 
 // More efficient than @Provides
-@InstallIn(ActivityComponent::class)
+// @InstallIn(ActivityComponent::class)
+@InstallIn(ApplicationComponent::class)
 @Module
 abstract class AppModule{
 
-    @LocalImpl
-    @ActivityScoped
-    @Binds
-    abstract fun bindLocalVenueService(
-        localVenueService: LocalVenueService
-    ): VenueService
-
-    @RemoteImpl
-    @ActivityScoped
-    @Binds
-    abstract fun bindRemoteVenueService(
-        remoteVenueService: RemoteVenueService
-    ): VenueService
-
-
+    @LocalDataImpl
+    // @ActivityScoped
     @Singleton
-    @Provides
-    fun provideParam(): String {
-        return "sample string"
-    }
+    @Binds
+    abstract fun bindLocalDataSource(
+        bookingLocalDataSouce: BookingLocalDataSouce
+    ): BookingDataSource
+
+    @RemoteDataImpl
+    // @ActivityScoped
+    @Singleton
+    @Binds
+    abstract fun bindRemoteDataSource(
+        bookingRemoteDataSouce: BookingRemoteDataSource
+    ): BookingDataSource
+
+
+    @DefRepoImpl
+    // @ActivityScoped
+    @Singleton
+    @Binds
+    abstract fun bindDefaulRepository(
+        defaultBookingRepository: DefaultBookingRepository
+    ): BookingRepository
+
+
+    @BookingServ
+    // @ActivityScoped
+    @Singleton
+    @Binds
+    abstract fun bindBookingService(
+        bookingService: BookingServiceImpl
+    ): BookingService
+
+
 
 }
 
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class LocalImpl
+annotation class LocalDataImpl
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class RemoteImpl
+annotation class RemoteDataImpl
+
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class DefRepoImpl
+
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class BookingServ
 
 
 

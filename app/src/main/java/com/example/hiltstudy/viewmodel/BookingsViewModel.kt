@@ -2,12 +2,12 @@ package com.example.hiltstudy.viewmodel
 
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.example.hiltstudy.repository.BookingRepository
 import com.example.hiltstudy.Result
+import com.example.hiltstudy.Result.*
 import com.example.hiltstudy.data.Booking
+import kotlinx.coroutines.launch
 
 class BookingsViewModel
 
@@ -16,22 +16,27 @@ class BookingsViewModel
     @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel(), LifecycleObserver {
 
+    private val _forceUpdate = MutableLiveData<Boolean>(false)
 
-    suspend fun getBookings(): List<Booking>{
-        val result =  bookingRepository.getBookings(true, "123", "swimmer")
+    val _bookings: LiveData<List<Booking>> = _forceUpdate.switchMap {forceUpdate ->
 
-        return if (result is Result.Success){
-            val resultList: List<Booking> = result.data
-
-            if (resultList.isNotEmpty()){
-                resultList
-            }else{
-                emptyList()
-            }
-
-        }else{
-            emptyList()
+        viewModelScope.launch {
+            bookingRepository.getBookings(forceUpdate, "123", "swimmer")
         }
+
+        bookingRepository.observeBookings().switchMap {bookingList ->
+            getResultData(bookingList)
+        }
+
     }
+
+
+    private fun getResultData(bookingResult: List<Booking>): LiveData<List<Booking>>{
+        val result = MutableLiveData<List<Booking>>()
+        result.value = bookingResult
+
+        return result
+    }
+
 
 }

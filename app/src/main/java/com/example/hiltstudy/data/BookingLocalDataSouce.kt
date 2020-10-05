@@ -1,5 +1,6 @@
 package com.example.hiltstudy.data
 
+import androidx.lifecycle.LiveData
 import androidx.work.ListenableWorker
 import com.example.hiltstudy.Result
 import com.example.hiltstudy.database.BookingDao
@@ -11,17 +12,12 @@ class BookingLocalDataSouce (
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): BookingDataSource{
 
-    override suspend fun getBookings(userId: String, accountType: String): Result<List<Booking>> {
+    override suspend fun getBookings(userId: String, accountType: String) {
+        val booking = Booking("1234", "Saturday morning swim")
+        bookingDao.insertBooking(booking)
+    }
 
-
-        val dbBookings = bookingDao.getAllBookings()
-        return if(dbBookings != null){
-            Result.Success(dbBookings)
-        }else{
-            val booking = Booking("1234", "Saturday morning swim")
-            val bookings = listOf(booking)
-            Result.Success(bookings)
-        }
-
+    override fun observeBookings(): LiveData<List<Booking>> {
+        return bookingDao.observeAllBookings()!!
     }
 }

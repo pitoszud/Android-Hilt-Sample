@@ -1,5 +1,9 @@
 package com.example.hiltstudy.fragments
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.hiltstudy.R
@@ -20,5 +24,11 @@ class BookingFragment(private val params: String) : Fragment(R.layout.fragment_b
     lateinit var authService: AuthService
 
 
-
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
 }
