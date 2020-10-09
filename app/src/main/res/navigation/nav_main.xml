@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_main"
+    app:startDestination="@id/bookingFragment">
+
+    <fragment
+        android:id="@+id/bookingFragment"
+        android:name="com.example.hiltstudy.fragments.BookingFragment"
+        android:label="BookingFragment"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_main"
+        />
+</navigation>
