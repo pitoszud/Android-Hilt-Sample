@@ -48,9 +48,10 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    // DI
-    implementation "com.google.dagger:hilt-android:2.28-alpha"
     annotationProcessor 'androidx.room:room-compiler:2.2.5'
+
+    // DI
+    implementation "com.google.dagger:hilt-android:2.28.3-alpha"
     kapt "com.google.dagger:hilt-android-compiler:2.28-alpha"
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha02"
     kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha02'
