@@ -9,8 +9,7 @@ import javax.inject.Singleton
 
 // @ActivityScoped
 @Singleton
-class BookingServiceImpl @Inject constructor(
-): BookingService {
+class BookingServiceImpl @Inject constructor(): BookingService {
 
     override fun bookVenue(): Booking {
 
