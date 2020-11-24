@@ -7,8 +7,10 @@ import com.example.hiltstudy.repository.BookingRepository
 import com.example.hiltstudy.Result
 import com.example.hiltstudy.Result.*
 import com.example.hiltstudy.data.Booking
+import dagger.hilt.android.scopes.ActivityScoped
 import kotlinx.coroutines.launch
 
+@ActivityScoped
 class BookingsViewModel
 
 @ViewModelInject constructor(
