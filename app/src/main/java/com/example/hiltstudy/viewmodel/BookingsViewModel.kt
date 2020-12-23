@@ -1,5 +1,6 @@
 package com.example.hiltstudy.viewmodel
 
+import android.util.Log
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
@@ -23,7 +24,8 @@ class BookingsViewModel
     val _bookings: LiveData<List<Booking>> = _forceUpdate.switchMap {forceUpdate ->
 
         viewModelScope.launch {
-            bookingRepository.getBookings(forceUpdate, "123", "swimmer")
+            val bookings = bookingRepository.getBookings(forceUpdate, "123", "swimmer")
+            Log.d(TAG, "${bookings.size} bookings retrieved")
         }
 
         bookingRepository.observeBookings().switchMap {bookingList ->
@@ -38,6 +40,11 @@ class BookingsViewModel
         result.value = bookingResult
 
         return result
+    }
+
+
+    companion object {
+        const val TAG = "BookingsViewModel"
     }
 
 

@@ -17,8 +17,8 @@ class DefaultBookingRepository
 ): BookingRepository{
 
     override suspend fun getBookings(forceUpdate: Boolean, userId: String, accountType: String
-    ) {
-        localDataSource.getBookings("1234", "swimmer")
+    ): List<Booking> {
+        return localDataSource.getBookings("1234", "swimmer")
     }
 
     override fun observeBookings(): LiveData<List<Booking>> {

@@ -12,9 +12,11 @@ class BookingLocalDataSouce (
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): BookingDataSource{
 
-    override suspend fun getBookings(userId: String, accountType: String) {
+    override suspend fun getBookings(userId: String, accountType: String): List<Booking> {
         val booking = Booking("1234", "Saturday morning swim")
         bookingDao.insertBooking(booking)
+
+        return listOf(booking)
     }
 
     override fun observeBookings(): LiveData<List<Booking>> {
