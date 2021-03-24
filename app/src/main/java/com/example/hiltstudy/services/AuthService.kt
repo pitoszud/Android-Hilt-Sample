@@ -4,11 +4,11 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AuthService
-@Inject
-constructor(){
+class AuthService @Inject constructor(
+    venueService: LocalVenueService
+): IAuthService {
 
-    fun isAuthenticated(): Boolean{
+    override fun isAuthenticated(): Boolean{
         return true
     }
 

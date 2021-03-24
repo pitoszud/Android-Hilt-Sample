@@ -2,22 +2,21 @@ package com.example.hiltstudy.services
 
 import android.util.Log
 import com.example.hiltstudy.data.Booking
-import com.example.hiltstudy.di.LocalDataImpl
-import com.example.hiltstudy.di.RemoteDataImpl
-import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.random.Random
 
 // @ActivityScoped
 @Singleton
-class BookingServiceImpl @Inject constructor(private val authService: AuthService): BookingService {
+class BookingService @Inject constructor(private val authService: AuthService): IBookingService {
 
     override fun bookVenue(): Booking {
         val auth = authService.isAuthenticated()
         if (!auth){
             Log.e(TAG, "User is not authenticated")
         }
-        return Booking(venueName = "dummy Booking")
+        val randomNum = Random.nextInt(1, 100)
+        return Booking(venueName = "dummy Booking: $randomNum")
     }
 
     override fun getBookings(): List<Booking> {
@@ -31,7 +30,7 @@ class BookingServiceImpl @Inject constructor(private val authService: AuthServic
 }
 
 
-interface BookingService{
+interface IBookingService{
     fun bookVenue(): Booking
     fun getBookings(): List<Booking>
 }

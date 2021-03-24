@@ -3,10 +3,9 @@ package com.example.hiltstudy
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.hiltstudy.services.AuthService
-import com.example.hiltstudy.services.BookingServiceImpl
+import com.example.hiltstudy.services.BookingService
 import com.example.hiltstudy.viewmodel.BookingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
@@ -17,7 +16,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var bookingServiceImpl: BookingServiceImpl
+    lateinit var bookingService: BookingService
 
     @Inject lateinit var authService: AuthService
 
@@ -39,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         book_button.setOnClickListener {
             book_button.setOnClickListener {
                 if (authService.isAuthenticated()){
-                    val bk = bookingServiceImpl.bookVenue()
+                    val bk = bookingService.bookVenue()
                     textView.text = bk.venueName
                     //Toast.makeText(this, bk.venueName, Toast.LENGTH_LONG).show()
                 }

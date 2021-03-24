@@ -6,6 +6,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.random.Random
 
+// If the service injects any object in the future it will have to be provided
 // @ActivityScoped
 @Singleton
 class LocalVenueService @Inject constructor(): VenueService{

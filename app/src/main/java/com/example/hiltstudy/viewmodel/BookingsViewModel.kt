@@ -8,15 +8,21 @@ import com.example.hiltstudy.repository.BookingRepository
 import com.example.hiltstudy.Result
 import com.example.hiltstudy.Result.*
 import com.example.hiltstudy.data.Booking
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.scopes.ActivityScoped
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-@ActivityScoped
+// @HiltViewModel replaced @ActivityScoped since 2.31.2-alpha
+@HiltViewModel
 class BookingsViewModel
 
-@ViewModelInject constructor(
+// @ViewModelInject replaced with @Inject since 2.31.2-alpha
+// @Assisted for SavedStateHandle removed
+@Inject
+constructor(
     private val bookingRepository: BookingRepository,
-    @Assisted private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel(), LifecycleObserver {
 
     private val _forceUpdate = MutableLiveData<Boolean>(false)

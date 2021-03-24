@@ -33,9 +33,6 @@ abstract class AppDatabase: RoomDatabase() {
     }
 
 
-
-
-
     companion object {
         @Volatile
         private var instance: AppDatabase? = null
@@ -84,11 +81,6 @@ abstract class AppDatabase: RoomDatabase() {
             }
 
         }
-
-
-
-
-
     }
 
 }

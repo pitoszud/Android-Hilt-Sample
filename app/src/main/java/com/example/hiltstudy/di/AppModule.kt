@@ -1,29 +1,26 @@
 package com.example.hiltstudy.di
 
-import android.content.Context
 import com.example.hiltstudy.data.BookingDataSource
 import com.example.hiltstudy.data.BookingLocalDataSouce
 import com.example.hiltstudy.data.BookingRemoteDataSource
-import com.example.hiltstudy.database.AppDatabase
 import com.example.hiltstudy.repository.BookingRepository
 import com.example.hiltstudy.repository.DefaultBookingRepository
+import com.example.hiltstudy.services.AuthService
+import com.example.hiltstudy.services.IBookingService
 import com.example.hiltstudy.services.BookingService
-import com.example.hiltstudy.services.BookingServiceImpl
+import com.example.hiltstudy.services.IAuthService
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
-import dagger.hilt.android.components.ApplicationComponent
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.android.scopes.ActivityScoped
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
 
-// More efficient than @Provides
-// @InstallIn(ActivityComponent::class)
-@InstallIn(ApplicationComponent::class)
+// @InstallIn is more efficient than @Provides
+
+// @InstallIn(ApplicationComponent::class) replaced with @InstallIn(SingletonComponent::class) since 2.31.2-alpha
+@InstallIn(SingletonComponent::class)
 @Module
 abstract class AppModule{
 
@@ -58,8 +55,16 @@ abstract class AppModule{
     @Singleton
     @Binds
     abstract fun bindBookingService(
-        bookingService: BookingServiceImpl
-    ): BookingService
+        bookingService: BookingService
+    ): IBookingService
+
+
+    @AuthServ
+    @Singleton
+    @Binds
+    abstract fun bindAuthService(
+        authService: AuthService
+    ): IAuthService
 
 
 
@@ -83,6 +88,11 @@ annotation class DefRepoImpl
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class BookingServ
+
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class AuthServ
 
 
 
